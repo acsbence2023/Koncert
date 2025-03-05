@@ -3,38 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Models\Festivals;
+use App\Models\Festivals;
+use App\Http\Models\Artists;
+use App\Http\Models\MusicType;
+use App\Http\Requests\FestivalsRequest;
+use App\Http\Controllers\ResponseController;
 
-class FestivalsController extends Controller
+
+class FestivalsController extends ResponseController
 {
     public function getFestivals() {
-        return Festivals::all();
+        return $this->sendResponse(Festivals::all(),"Sikeres lekérés");
     }
-    public function addFestivals(Request $request)
+    public function addFestivals(FestivalsRequest $request)
+    {
+       $festivals = new Festivals;
+       $festivals->name = $request["name"];
+       $festivals->date = $request["date"];
+       $festivals->city_id = $request["city_id"];
+       $festivals->artists_id = $request["artists_id"];
+       $festivals->price = $request["price"];
+       $festivals->save();
+       return $this->sendResponse($festivals,"Sikeres felvétel");
+
+       
+    }
+    public function editFestivals(FestivalsRequest $request,$id)
     {
         $request->validate([
             'name' => 'required|string',
             'date' => 'required|date',
-            'price' => 'required|integer',
-            'artist_id' => 'required|exists:artists,id',
-            'city_id' => 'required|exists:cities,id'
+            'city_id' => 'required|integer',
+            'artists_id' => 'required|integer',
+            'price' => 'required|integer'
         ]);
+        Festivals::find($id)->update($request->all());
+        return $this->sendResponse(Festivals::find($id),"Sikeres frissítés");
 
-        return Festivals::create($request->all());
-    }
-    public function updateFestivals(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required|string',
-            'date' => 'required|date',
-            'price' => 'required|integer',
-            'artist_id' => 'required|exists:artists,id',
-            'city_id' => 'required|exists:cities,id'
-        ]);
-
-        return Festivals::find($id)->update($request->all());
+       
     }
     public function deleteFestivals($id) {
-        return Festivals::find($id)->delete();
+      Festivals::find($id)->delete();
+      return $this->sendResponse(Festivals::all(),"Sikeres törlés");
     }
 }

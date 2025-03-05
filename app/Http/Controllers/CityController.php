@@ -7,11 +7,12 @@ use App\Models\City;
 use App\Http\Requests\CityRequest;
 use App\Http\Controllers\ResponseController;
 
+
 class CityController extends ResponseController
 {
     public function getCities()
     {
-        return $this->sendResponse(City::all(),"Cities retrieved successfully");
+        return $this->sendResponse(City::all(),"Sikeres lekérés");
     }
 
     public function addCity(CityRequest $request) {
