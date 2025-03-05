@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class MusicTypeRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class MusicTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,16 @@ class MusicTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "category" => "required|string"
         ];
+    }
+    public function failedValidation( Validator $validator ) {
+
+        throw new HttpResponseException( response()->json([
+
+            "success" => false,
+            "message" => "Beviteli hiba",
+            "data" => $validator->errors()
+        ]));
     }
 }

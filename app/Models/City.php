@@ -8,5 +8,11 @@ use Illuminate\Notifications\Notifiable;
 class City extends Model
 {
     use HasFactory, Notifiable;
+
+    protected $fillable = [
+        'name',
+        'capacity',
+    ];
+
     protected $table = 'city';
 }

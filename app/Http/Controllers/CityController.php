@@ -12,8 +12,9 @@ class CityController extends ResponseController
 {
     public function getCities()
     {
-        return $this->sendResponse(City::all(), $city);
+        return $this->sendResponse(City::all(),"Sikeres lekérés");
     }
+
     public function addCity(CityRequest $request) {
        $city = new City;
        $city->name = $request["name"];
@@ -28,10 +29,10 @@ class CityController extends ResponseController
             'capacity' => 'required|integer'
         ]);
         City::find($id)->update($request->all());
-        return $this->sendResponse(City::find($id), "Sikeres módosítás");
+        return $this->sendResponse(City::find($id),"Sikeres frissítés");
     }
     public function deleteCity($id) {
         City::find($id)->delete();
-        return $this->sendResponse(City::find($id), "Sikeres törlés");
+        return $this->sendResponse(City::all(),"Sikeres törlés");
     }
 }
