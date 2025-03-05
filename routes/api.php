@@ -12,4 +12,4 @@ Route::get('/user', function (Request $request) {
 Route::post('/addCity',[CityController::class,'addCity']);
 Route::get('/getCities',[CityController::class,'getCities']);
 Route::post('/updateCity/{id}',[CityController::class,'updateCity']);
-Route::post('/deleteCity/{id}',[CityController::class,'deleteCity']);
+Route::delete('/deleteCity/{id}',[CityController::class,'deleteCity']);

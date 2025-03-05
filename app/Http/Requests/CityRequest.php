@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class CityRequest extends FormRequest
 {
@@ -22,7 +24,7 @@ class CityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city' => 'required|string',
+            'name' => 'required|string',
             'capacity' => 'required|integer'
         ];
     }
