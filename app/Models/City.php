@@ -8,4 +8,5 @@ use Illuminate\Notifications\Notifiable;
 class City extends Model
 {
     use HasFactory, Notifiable;
+    protected $table = 'city';
 }
