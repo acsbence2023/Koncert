@@ -26,6 +26,10 @@ class User extends Authenticatable
         'admin',
     ];
 
+    protected $attributes = [
+        'festivals_id' => null,
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *

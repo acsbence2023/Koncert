@@ -26,7 +26,12 @@ class UserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
+            "password" => [
+                            "required",
+                            "min:8",
+                            "regex:/[a-z]/",
+                            "regex:/[A-Z]/",
+                            "regex:/[0-9]/" ],
             'phone_number' => 'required|integer',
             'festivals_id' => 'required|exists:festivals,id',
             'admin'=>'required|integer',
