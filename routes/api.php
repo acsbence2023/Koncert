@@ -25,6 +25,9 @@ Route::delete('/deleteCity/{id}',[CityController::class,'deleteCity']);
 Route::post('/register', [UserController::class, 'register']);
 Route::get('/users', [UserController::class, 'listUsers']);
 Route::get('/users/{id}', [UserController::class, 'getUser']);
+Route::put('/setAdmin',[UserController::class,'setAdmin'])->middleware('auth:sanctum');
+Route::post( "/login", [ UserController::class, "login" ]);
+Route::post( "/logout", [ UserController::class, "logout" ]);
 
 Route::post('/addArtists',[ArtistsController::class,'addArtists']);
 Route::get('/getArtists',[ArtistsController::class,'getArtists']);

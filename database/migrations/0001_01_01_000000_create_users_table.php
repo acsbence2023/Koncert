@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->foreignId('festivals_id');
             $table->integer('phone_number');
             $table->integer('festivals_id')->nullable();
             $table->integer("admin");
