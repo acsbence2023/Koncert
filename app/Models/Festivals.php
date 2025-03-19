@@ -12,4 +12,11 @@ class Festivals extends Model
    protected $table = 'festivals';
    protected $fillable = ['name', 'date', 'price', 'city_id', 'artists_id'];
 
+   public function city(){
+      return $this->hasMany(City::class);
+   }
+
+   public function artists(){
+      return $this->hasMany(Artists::class);
+   }
 }

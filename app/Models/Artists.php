@@ -15,4 +15,7 @@ class Artists extends Model
         'name',
         'music_type_id',
     ];
+    public function musicType(){
+        return $this->hasMany(MusicType::class);
+    }
 }

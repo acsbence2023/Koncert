@@ -18,7 +18,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('phone_number');
-            $table->foreignId('festivals_id');
             $table->integer("admin");
             $table->rememberToken();
             $table->timestamps();

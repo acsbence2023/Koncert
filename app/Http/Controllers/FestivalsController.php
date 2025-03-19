@@ -20,8 +20,8 @@ class FestivalsController extends ResponseController
        $festivals = new Festivals;
        $festivals->name = $request["name"];
        $festivals->date = $request["date"];
-       $festivals->city_id = $request["city_id"];
-       $festivals->artists_id = $request["artists_id"];
+       $festivals->city_id = (new CityController)->getCityId($request["name"]);
+       $festivals->artists_id = (new ArtistController)->getArtistId($request["name"]);
        $festivals->price = $request["price"];
        $festivals->save();
        return $this->sendResponse($festivals,"Sikeres felvétel");

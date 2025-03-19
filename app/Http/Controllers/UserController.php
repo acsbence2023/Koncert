@@ -74,4 +74,45 @@ class UserController extends ResponseController
 
         return $tokens;
     }
+    public function setAdmin( Request $request ) {
+
+        if ( !Gate::allows( "super" )) {
+
+            return $this->sendError( "Autentikációs hiba", "Nincs jogosultság", 401 );
+        }
+
+        $user = User::find( $request[ "id" ]);
+        $user->admin = $request[ "admin" ];
+
+        $user->update();
+
+        return $this->sendResponse( $user->name, "Admin jog megadva" );
+    }
+    public function updateUser( Request $request ) {
+
+        if( !Gate::allows( "super" )) {
+
+            return $this->sendError( "Autentikációs hiba", "Nincs jogosultság", 401 );
+        }
+
+        $user = User::find( $request[ "id" ]);
+        $user->name = $request[ "name" ];
+        $user->email = $request[ "email" ];
+        $user->update();
+
+        return $this->sendResponse( $user, "Felhasználó frissítve" );
+    }
+
+    public function destroyUser( Request $request ) {
+
+        if( !Gate::allows( "super" )) {
+
+            return $this->sendError( "Autentikációs hiba", "Nincs jogosultság", 401 );
+        }
+
+        $user =  User::find( $request[ "id" ]);
+        $user->delete();
+
+        return $this->sendResponse( $user->name, "Felhasználó törölve" );
+    }
 }

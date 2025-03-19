@@ -28,7 +28,6 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
             'phone_number' => 'required|integer',
-            'festivals_id' => 'required|exists:festivals,id',
             'admin'=>'required|integer',
         ];
     }

@@ -35,4 +35,12 @@ class CityController extends ResponseController
         City::find($id)->delete();
         return $this->sendResponse(City::all(),"Sikeres törlés");
     }
+    public function getCityId( $cityName ) {
+
+        $city = City::where( "name", $cityName )->first();
+
+        $id = $city->id;
+
+        return $id;
+    }
 }
