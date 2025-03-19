@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\ResponseController;
 use App\Http\Requests\UserRequest;
-use App\Http\Request\UserLoginRequest;
-use App\Http\Request\UserRegisterRequest;
+use App\Http\Requests\UserLoginRequest;
+use App\Http\Requests\UserRegisterRequest;
 
 class UserController extends ResponseController
 {
-    public function addUser(UserRequest $request) {
+    /* public function addUser(UserRequest $request) {
 
         $user = new User();
         $user->name = $request['name'];
@@ -23,7 +23,7 @@ class UserController extends ResponseController
         $user->save();
 
         return $this->sendResponse($user,"Sikeres!");
-    }
+    } */
 
     // Felhasználók listázása
     public function listUsers()
@@ -43,6 +43,8 @@ class UserController extends ResponseController
 
         return response()->json($user, 200);
     }
+
+
     public function register( UserRegisterRequest $request ) {
 
         $request->validated();
@@ -51,16 +53,30 @@ class UserController extends ResponseController
 
             "name" => $request["name"],
             "email" => $request["email"],
+            "phone_number" => $request["phone_number"],
             "password" => bcrypt( $request["password"]),
             "admin" => 0
         ]);
 
+        if(User::count() == 1) {
+            $user->admin = 2;
+            $user->save();
+        }
+
+
+
         return $this->sendResponse( $user->name, "Sikeres regisztráció");
     }
+
+
+
     public function login(UserLoginRequest $request){
         $request->validated();
         
     }
+
+
+
     public function logout() {
 
         auth( "sanctum" )->user()->currentAccessToken()->delete();

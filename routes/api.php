@@ -21,7 +21,8 @@ Route::get('/getCities',[CityController::class,'getCities']);
 Route::post('/updateCity/{id}',[CityController::class,'updateCity']);
 Route::delete('/deleteCity/{id}',[CityController::class,'deleteCity']);
 
-Route::post('/adduser', [UserController::class, 'addUser']);
+/* Route::post('/adduser', [UserController::class, 'addUser']); */
+Route::post('/register', [UserController::class, 'register']);
 Route::get('/users', [UserController::class, 'listUsers']);
 Route::get('/users/{id}', [UserController::class, 'getUser']);
 

@@ -26,6 +26,7 @@ class UserRegisterRequest extends FormRequest
         return [
             "name" => "required|max:10|unique:users,name",
             "email" => "required|email|unique:users,email",
+            'phone_number' => 'required|integer',
             "password" => [
                             "required",
                             "min:8",
