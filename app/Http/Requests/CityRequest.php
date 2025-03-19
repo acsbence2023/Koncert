@@ -24,8 +24,8 @@ class CityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'capacity' => 'required|integer'
+            'name' => 'required|string|max:255|unique:city,name',
+            'capacity' => 'required|integer|unique:city,capacity',
         ];
     }
     public function failedValidation( Validator $validator ) {

@@ -68,7 +68,7 @@ class MusicController extends ResponseController
     }
     public function getMusicId( $musicCategory ) {
 
-        $music = City::where( "category", $cityCategory )->first();
+        $music = MusicType::where( "category", $musicCategory )->first();
 
         $id = $music->id;
 

@@ -24,8 +24,8 @@ class ArtistsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'music_type_id' => 'required|exists:music_type,id',
+            'name' => 'required|string|max:255|unique:artists,name',
+            'music_type_id' => 'required|integer|exists:music_type,id',
         ];
     }
     public function failedValidation( Validator $validator ) {

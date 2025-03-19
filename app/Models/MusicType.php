@@ -14,6 +14,10 @@ class MusicType extends Model
     protected $table = 'music_type';
 
     protected $fillable = [
+        
         'category',
     ];
+    public function artists(){
+        return $this->hasMany(Artists::class);
+    }
 }

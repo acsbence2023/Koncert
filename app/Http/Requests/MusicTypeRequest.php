@@ -24,7 +24,7 @@ class MusicTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "category" => "required|string"
+            "category" => "required|string|unique:music_type,category"
         ];
     }
     public function failedValidation( Validator $validator ) {

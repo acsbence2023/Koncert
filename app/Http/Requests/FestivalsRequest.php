@@ -24,11 +24,11 @@ class FestivalsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'date' => 'required|date',
-            'city_id' => 'required|integer',
-            'artists_id' => 'required|integer',
-            'price' => 'required|integer'
+            'name' => 'required|string|max:255|unique:festivals,name',
+            'date' => 'required|date|unique:festivals,date',
+            'city_id' => 'required|integer|unique:city,id',
+            'artists_id' => 'required|integer|unique:artists,id',
+            'price' => 'required|integer|unique:festivals,price',
         ];
     }
     public function failedValidation( Validator $validator ) {

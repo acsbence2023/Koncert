@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Artists;
 use App\Http\Controllers\ResponseController;
 use App\Http\Requests\ArtistsRequest;
+use App\Http\Controllers\MusicController;
 
 
 class ArtistsController extends ResponseController
@@ -14,17 +15,20 @@ class ArtistsController extends ResponseController
         return $this->sendResponse(Artists::all(),"Sikeres lekérés");
     }
     public function addArtists(ArtistsRequest $request) {
-        //.
+        $request->validated();
+
         $artists = new Artists;
-       $artists->name= $request["name"];
-       $artists->music_type_id= (new MusicTypeController)->getMusicTypeId($request["category"]);
-       $artists->save();
-       return $this->sendResponse($artists,"Sikeres felvétel");
+        $artists->name = $request["name"];
+        $artists->music_type_id = (new MusicController)->getMusicId($request["category"]);
+        
+        $artists->save();
+    
+        return $this->sendResponse($artists, "Sikeres felvétel");
     }
     public function editArtists(ArtistsRequest $request,$id) {
         $request->validate();
         $artists->name= $request["name"];
-        $artists->music_type_id= (new MusicTypeController)->getMusicTypeId($request["category"]);
+        $artists->music_type_id= (new MusicController)->getMusicId($request["category"]);
         $artists->update();
         return $this->sendResponse(Artists::find($id),"Sikeres frissítés");
     }

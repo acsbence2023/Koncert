@@ -13,10 +13,10 @@ class Festivals extends Model
    protected $fillable = ['name', 'date', 'price', 'city_id', 'artists_id'];
 
    public function city(){
-      return $this->hasMany(City::class);
+      return $this->belonfsTo(City::class);
    }
 
    public function artists(){
-      return $this->hasMany(Artists::class);
+      return $this->belonfsTo(Artists::class);
    }
 }

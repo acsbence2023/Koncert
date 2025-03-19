@@ -15,4 +15,7 @@ class City extends Model
     ];
 
     protected $table = 'city';
+    public function festivals(){
+        return $this->hasMany(Festivals::class);
+    }
 }
