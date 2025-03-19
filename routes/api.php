@@ -13,6 +13,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+//Ide a pubban lévő minta kellene, tudod a védett api eléréses cuccok(super admin tudja csak kezelni az olyan lekéréseket).
+//  Majd ezt az üzentet azért töröld ki.
+
 Route::post('/addCity',[CityController::class,'addCity']);
 Route::get('/getCities',[CityController::class,'getCities']);
 Route::post('/updateCity/{id}',[CityController::class,'updateCity']);

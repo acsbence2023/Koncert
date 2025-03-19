@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Controllers\ResponseController;
 use App\Http\Requests\UserRequest;
+use App\Http\Request\UserLoginRequest;
+use App\Http\Request\UserRegisterRequest;
 
 class UserController extends ResponseController
 {
@@ -17,6 +19,7 @@ class UserController extends ResponseController
         $user->password = bcrypt($request['password']);
         $user->phone_number = $request['phone_number'];
         $user->festivals_id = $request['festivals_id'];
+        $user->admin = $request['admin'];
         $user->save();
 
         return $this->sendResponse($user,"Sikeres!");
@@ -39,5 +42,36 @@ class UserController extends ResponseController
         }
 
         return response()->json($user, 200);
+    }
+    public function register( UserRegisterRequest $request ) {
+
+        $request->validated();
+
+        $user = User::create([
+
+            "name" => $request["name"],
+            "email" => $request["email"],
+            "password" => bcrypt( $request["password"]),
+            "admin" => 0
+        ]);
+
+        return $this->sendResponse( $user->name, "Sikeres regisztráció");
+    }
+    public function login(UserLoginRequest $request){
+        $request->validated();
+        
+    }
+    public function logout() {
+
+        auth( "sanctum" )->user()->currentAccessToken()->delete();
+        $name = auth( "sanctum" )->user()->name;
+
+        return $this->sendResponse( $name, "Sikeres kijelentkezés");
+    }
+        public function getTokens() {
+
+        $tokens = DB::table( "personal_access_tokens" )->get();
+
+        return $tokens;
     }
 }

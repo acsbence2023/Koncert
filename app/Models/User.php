@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'festivals_id',
+        'admin',
     ];
 
     /**
