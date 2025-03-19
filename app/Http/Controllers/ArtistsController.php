@@ -14,6 +14,7 @@ class ArtistsController extends ResponseController
         return $this->sendResponse(Artists::all(),"Sikeres lekérés");
     }
     public function addArtists(ArtistsRequest $request) {
+        //.
         $artists = new Artists;
        $artists->name= $request["name"];
        $artists->music_type_id= (new MusicTypeController)->getMusicTypeId($request["category"]);
