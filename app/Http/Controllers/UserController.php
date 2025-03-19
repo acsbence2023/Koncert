@@ -8,6 +8,10 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\UserRegisterRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UserController extends ResponseController
 {
@@ -70,9 +74,26 @@ class UserController extends ResponseController
 
 
 
-    public function login(UserLoginRequest $request){
+    public function login( UserLoginRequest $request ) {
+
         $request->validated();
-        
+
+        if( Auth::attempt([ "name" => $request["name"], "password" => $request["password"]])) {
+
+
+            $authUser = Auth::user();
+            $token = Auth::user()->createToken('authToken')->plainTextToken;
+            $data["user"] = [ "user" => $authUser->name ];
+            $data[ "admin" ] = $authUser->admin;
+            $data["token"] = $token;
+
+            return $this->sendResponse( $data, "Sikeres bejelentkezés");
+        }
+        else {
+
+            return $this->sendError( "Autentikációs hiba", "Hibás felhasználónév vagy jelszó", 401 );
+
+        }
     }
 
 
@@ -90,20 +111,29 @@ class UserController extends ResponseController
 
         return $tokens;
     }
+
+
     public function setAdmin( Request $request ) {
+        if (Auth::check()) {
+            if ( !Gate::allows( "super" )) {
 
-        if ( !Gate::allows( "super" )) {
-
-            return $this->sendError( "Autentikációs hiba", "Nincs jogosultság", 401 );
+                return $this->sendError( "Autentikációs hiba", "Nincs jogosultság", 401 );
+            }
+    
+            $user = User::find( $request[ "id" ]);
+            $user->admin = $request[ "admin" ];
+    
+            $user->save();
+    
+            return $this->sendResponse( $user->name, "Admin jog megadva" );
+        }
+        else {
+            return $this->sendError("Hiba! Nincs bejelentkezve");
         }
 
-        $user = User::find( $request[ "id" ]);
-        $user->admin = $request[ "admin" ];
-
-        $user->update();
-
-        return $this->sendResponse( $user->name, "Admin jog megadva" );
     }
+
+
     public function updateUser( Request $request ) {
 
         if( !Gate::allows( "super" )) {
